@@ -3,7 +3,9 @@
 #include <stdint.h>
 #include <string.h>
 #include "cartridge.h"
+#include "sm83.h"
 
+#define QUIT 0
 
 int main(int argc, char** argv){
   if (argc < 2) {
@@ -48,6 +50,33 @@ int main(int argc, char** argv){
   LoadCartridge(&cart_header, buffer);
 
   printf("selected game is: %s\n", cart_header.title);
+
+  struct sm83_cpu* cpu = cpu_init();
+  
+  printf("Program Counter: %x\n", cpu->PC);
+
+  uint8_t opcode = 0x00;
+  int (*pinstruction)() = cpu->instructions[opcode];
+  pinstruction();
+  // while(!QUIT) {
+    // fetch
+    /**
+     * read the address stored in the program counter
+     * and then increment the program counter.
+    */
+
+    // decode
+    /**
+     * Index into the instruction set using the
+     * returned opcode from above. This should return a function
+     * that will execute our instruction.
+    */
+
+    // execute
+    /**
+     * Call the returned function
+    */
+  // }
 
   free(buffer);
   return EXIT_SUCCESS;  
