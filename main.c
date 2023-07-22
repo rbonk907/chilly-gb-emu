@@ -4,6 +4,7 @@
 #include <string.h>
 #include "cartridge.h"
 #include "sm83.h"
+#include "bus.h"
 
 #define QUIT 0
 
@@ -55,7 +56,7 @@ int main(int argc, char** argv){
   
   printf("Program Counter: %x\n", cpu->PC);
 
-  uint8_t opcode = 0x00;
+  uint8_t opcode = read(0x0100);
   int (*pinstruction)() = cpu->instructions[opcode];
   pinstruction();
   // while(!QUIT) {
