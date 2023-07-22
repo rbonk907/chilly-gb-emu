@@ -17,4 +17,6 @@ struct HEADER {
   uint8_t header_checksum;
 };
 
+uint8_t *rom_buffer;
+
 void LoadCartridge(struct HEADER *cart_header, uint8_t *buffer);

@@ -34,12 +34,12 @@ int main(int argc, char** argv){
   /**
    * Allocate buffer for rom
   */
-  uint8_t *buffer = malloc(rom_size);
+  rom_buffer = malloc(rom_size);
 
   /**
    * Load rom into buffer
   */
-  fread(buffer, 1, rom_size, rom);
+  fread(rom_buffer, 1, rom_size, rom);
 
   if ( fclose(rom) != 0) {
     perror("fclose");
@@ -47,7 +47,7 @@ int main(int argc, char** argv){
   }
 
   struct HEADER cart_header;
-  LoadCartridge(&cart_header, buffer);
+  LoadCartridge(&cart_header, rom_buffer);
 
   printf("selected game is: %s\n", cart_header.title);
 
@@ -78,6 +78,6 @@ int main(int argc, char** argv){
     */
   // }
 
-  free(buffer);
+  free(rom_buffer);
   return EXIT_SUCCESS;  
 }

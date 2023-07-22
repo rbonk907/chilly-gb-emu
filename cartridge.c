@@ -1,4 +1,5 @@
 #include "cartridge.h"
+#include <string.h>
 
 void LoadCartridge(struct HEADER *cart_header, uint8_t *buffer) {
   memcpy(cart_header->entry, &buffer[0x0100], 4);
