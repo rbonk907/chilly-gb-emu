@@ -59,12 +59,19 @@ int main(int argc, char** argv){
   uint8_t opcode = read(0x0100);
   int (*pinstruction)() = cpu->instructions[opcode];
   pinstruction();
-  // while(!QUIT) {
+
+  int machine_cycles = 0;
+  for (;;) {
+    if (machine_cycles > 0) {
+      --machine_cycles;
+      continue;
+    }
     // fetch
     /**
      * read the address stored in the program counter
      * and then increment the program counter.
     */
+    uint8_t opcode = read(cpu->PC++);
 
     // decode
     /**
@@ -72,12 +79,14 @@ int main(int argc, char** argv){
      * returned opcode from above. This should return a function
      * that will execute our instruction.
     */
+    int (*instruction)() = cpu->instructions[opcode];
 
     // execute
     /**
      * Call the returned function
     */
-  // }
+    machine_cycles += instruction();
+  }
 
   free(rom_buffer);
   return EXIT_SUCCESS;  
