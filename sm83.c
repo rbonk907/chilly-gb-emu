@@ -1,25 +1,26 @@
-#include "sm83.h"
 #include <stdio.h>
+#include "sm83.h"
+#include "bus.h"
 
 struct sm83_cpu cpu = {
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   {
-    &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop,
-    &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop,
-    &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop,
-    &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop,
-    &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop,
-    &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop,
-    &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop,
-    &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop,
-    &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop,
-    &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop,
-    &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop,
-    &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop,
-    &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop,
-    &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop,
-    &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop,
-    &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop, &nop
+    &nop, &not_impl, &ld_ind_bc_a, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl,
+    &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl,
+    &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl,
+    &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl,
+    &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl,
+    &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl,
+    &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl,
+    &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl,
+    &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl,
+    &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl,
+    &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl,
+    &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl,
+    &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl,
+    &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl,
+    &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl,
+    &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl, &not_impl
   }
 };
 
@@ -42,4 +43,21 @@ int nop() {
   printf("No Operation\n");
 
   return 0;
+}
+
+int not_impl() {
+  printf("Instruction not implemented yet...");
+
+  exit(0);
+}
+
+//************* Load Instructions *****************
+int ld_ind_bc_a() {
+  /**
+   * 2 - machine cycles
+   * 1 - Byte
+  */
+  uint16_t address = (cpu.B << 8) & cpu.C;
+  write(address, cpu.A);
+  return 2;
 }
